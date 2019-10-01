@@ -1,0 +1,46 @@
+    //I_love_StarnyC 
+    #include<bits/stdc++.h>
+    #define ll long long
+    #define ld long double
+    #define f first
+    #define s second
+    #define pb push_back
+    #define fix  cout<<std::fixed;
+    #define mk make_pair
+    #define mod 1000000007
+    #define time  cerr<< '\n' << "Time elapsed :" << clock() * 1000.0 / CLOCKS_PER_SEC << " ms\n" ;
+    #define IOS        ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+    using namespace std;
+     
+    int main()
+    {  
+        ll n,m;
+        cin>>n>>m;
+        ll a[n];
+        for(int i=0;i<n;i++)
+        {
+    cin>>a[i];
+        }
+     
+       sort(a,a+n);
+       ll l=n/2;
+      ll f=1;
+    ll ans=a[l];
+       while(l<n-1 && m>0)
+       {  //if(a[l+1]==a[l]){++f;++l;}
+         if(m >= (a[l+1]-a[l])*f  )
+         {
+            m=m-(a[l+1]-a[l])*f;ans+=a[l+1]-a[l];++l;++f;
+         }
+         if(m < (a[l+1]-a[l])*f  )
+         {
+            ans+=m/f;m=0;
+         }
+       }
+     
+       if(m>0){ans+=m/f;m=0;}
+       cout<<ans;
+     
+     
+     
+    }
