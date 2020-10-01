@@ -1,0 +1,106 @@
+#include<bits/stdc++.h>
+#define ll long long
+#define ld long double
+#define f first
+#define s second
+#define FOR(i,a,n) for(int i=a;i<=n;i++)
+#define pb push_back
+#define fix  cout<<std::fixed;
+#define mk make_pair
+#define N 100005
+#define mod 1000000007
+#define time  cerr<< '\n' << "Time elapsed :" << clock() * 1000.0 / CLOCKS_PER_SEC << " ms\n" ;
+#define IOS        ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+using namespace std;
+vector<int> v[N];
+vector<ll> gg;
+ll sub[N],vis[N];
+ll dfs(ll node) 
+{ 
+  
+    vis[node] = 1; 
+    sub[node] = 1; 
+  
+    for (auto i : v[node]) { 
+  
+        if (!vis[i]) { 
+  
+            sub[node] += dfs(i);
+        } 
+    } 
+   return sub[node]; 
+} 
+void contri(int node,int n) 
+{ 
+  
+    vis[node] = 1; 
+  
+    for (int i : v[node]) { 
+  
+      
+        if (!vis[i]) { 
+            gg.pb( (sub[i])* (n - sub[i])); 
+            contri(i,n); 
+        } 
+    } 
+} 
+int main()
+{
+  IOS
+  ll t;
+  cin >> t;
+  while(t--)
+  {
+    ll n; cin >> n;
+   
+    for(int i=0;i<n-1;i++)
+    {
+      int a,b; cin >> a>> b;
+      v[a].pb(b);
+      v[b].pb(a);
+    }
+
+    ll k; cin >>k;
+    std::vector<ll> w;
+    for(int i=0;i<k;i++)
+    {
+      int g; cin >>g;
+       w.pb(g);
+    }
+    for(int i=w.size();i<n-1;i++)w.pb(1);
+
+      sort(w.begin(),w.end());
+memset(vis,0,sizeof(vis));
+memset(sub,0,sizeof(sub));
+
+   // for(auto i:w)cout<<i<<" ";
+    dfs(1);
+  // for(int i=1;i<=n;i++)cout<<sub[i]<<" ";
+    memset(vis,0,sizeof(vis));
+    contri(1,n);
+//cout<<endl;
+   // for(auto i:gg)cout<<i<<" ";
+
+sort(gg.begin(),gg.end());
+
+ll ans=0;
+
+if(w.size() > n-1)
+{
+  for(int i=n-1;i<w.size();i++)
+  {
+    w[n-2]=(w[n-2]*w[i])%mod;
+  }
+}
+for(int i=0;i<n-1;i++)
+{
+  ans += (gg[i]*w[i])%mod;
+  ans %=mod;
+}
+cout<<ans<<endl;
+
+for(int i=1;i<=N;i++)v[i].clear();
+  gg.clear();
+
+  }
+}
