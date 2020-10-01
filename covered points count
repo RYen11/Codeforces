@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+#define ll long long
+#define ld long double
+#define f first
+#define s second
+#define pb push_back
+#define fix  cout<<std::fixed;
+#define mk make_pair
+#define N 100005
+#define mod 1000000007
+#define time  cerr<< '\n' << "Time elapsed :" << clock() * 1000.0 / CLOCKS_PER_SEC << " ms\n" ;
+#define IOS        ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+using namespace std;
+
+int main()
+{
+  ll n;cin>>n;
+  ll a[n+1]={0};
+  map <ll,ll> mp;
+  for(int i=0;i<n;i++)
+  {
+    ll x,y;cin>>x>>y;
+    mp[x]+=1;
+    mp[y+1]-=1;
+  } 
+int c=0;
+ll h=0;
+  for(auto i=mp.begin();i!=mp.end();i++)
+  { if(c==0)h=i->second;
+    if(c>0)
+    {
+      i->second += h;
+      h=i->second;
+    }c++;
+  }
+  c=0;
+  h=0;
+  ll d=0;
+  for(auto i:mp)
+  {
+     if(c==0){h=i.f;d=i.s;}
+     if(c>0)
+     {
+       a[d]+=(i.f-h);
+       h=i.f;d=i.s;
+     }
+     c++;
+  }
+  for(int i=1;i<=n;i++)cout<<a[i]<<" ";
+}
